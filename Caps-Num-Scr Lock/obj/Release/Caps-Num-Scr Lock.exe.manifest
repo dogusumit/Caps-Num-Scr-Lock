@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Caps-Num-Scr Lock.exe" size="788424">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Caps-Num-Scr Lock.exe" size="788936">
       <assemblyIdentity name="Caps-Num-Scr Lock" version="1.0.0.0" publicKeyToken="3D4CDC0375697A9C" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>kXB7ZaVPKr7ChgEEo6MaYglrUKQ=</dsig:DigestValue>
+        <dsig:DigestValue>EKVgl9H+eC5eYsw9CGxV7lpa9rs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

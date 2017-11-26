@@ -148,6 +148,12 @@ namespace Caps_Num_Scr_Lock
 
         private void ac(object sender, EventArgs e)
         {
+                Show();
+                gizli = false;
+        }
+
+        private void ikonKlik(object sender, EventArgs e)
+        {
             if (gizli)
             {
                 Show();
@@ -216,7 +222,7 @@ namespace Caps_Num_Scr_Lock
         {
             RegistryKey regkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (!IsStartupItem())
-                regkey.SetValue("Caps - Num - Scr Lock", Application.ExecutablePath.ToString()+" /hide");
+                regkey.SetValue("Caps - Num - Scr Lock", Application.ExecutablePath.ToString()+" -hide");
         }
         private bool IsStartupItem()
         {
@@ -243,10 +249,13 @@ namespace Caps_Num_Scr_Lock
             string[] args = Environment.GetCommandLineArgs();
             if (args[0] != null)
             {
-                if (args[0].Equals("hide"))
+                foreach ( string a in args)
                 {
-                    Hide();
-                    gizli = true;
+                    if (a.Equals("-hide"))
+                    {
+                        Hide();
+                        gizli = true;
+                    }
                 }
             }
             
@@ -255,7 +264,7 @@ namespace Caps_Num_Scr_Lock
             trayMenu.MenuItems.Add("Aç", ac);
             trayMenu.MenuItems.Add("Çıkış", cikis);
             trayIcon.ContextMenu = trayMenu;
-            trayIcon.Click += new System.EventHandler(ac);
+            trayIcon.Click += new System.EventHandler(ikonKlik);
 
             RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
             if (regkey != null)
