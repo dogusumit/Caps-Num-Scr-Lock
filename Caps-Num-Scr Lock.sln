@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caps-Num-Scr Lock", "Caps-Num-Scr Lock\Caps-Num-Scr Lock.csproj", "{564D2871-C120-4E47-AA30-5BFF2AAFAC5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{564D2871-C120-4E47-AA30-5BFF2AAFAC5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{564D2871-C120-4E47-AA30-5BFF2AAFAC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{564D2871-C120-4E47-AA30-5BFF2AAFAC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{564D2871-C120-4E47-AA30-5BFF2AAFAC5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {785B40BE-8565-4238-A6A0-8A4696CB9BF5}
+	EndGlobalSection
+EndGlobal
