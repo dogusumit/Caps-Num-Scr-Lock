@@ -14,6 +14,7 @@ namespace Caps_Num_Scr_Lock
         private int gosterKontrol = -1;
         private int lockKontrol = -1;
         private bool gizli = false;
+        private bool ilkCalisma = true;
 
         public Form1()
         {
@@ -243,21 +244,29 @@ namespace Caps_Num_Scr_Lock
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        protected override void OnShown(EventArgs e)
         {
-
-            string[] args = Environment.GetCommandLineArgs();
-            if (args[0] != null)
+            base.OnShown(e);
+            if (ilkCalisma)
             {
-                foreach ( string a in args)
+                string[] args = Environment.GetCommandLineArgs();
+                if (args[0] != null)
                 {
-                    if (a.Equals("-hide"))
+                    foreach (string a in args)
                     {
-                        Hide();
-                        gizli = true;
+                        if (a.Equals("-hide"))
+                        {
+                            Hide();
+                            gizli = true;
+                            ilkCalisma = false;
+                        }
                     }
                 }
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
             
             trayMenu = new ContextMenu();
             trayIcon = new NotifyIcon();
