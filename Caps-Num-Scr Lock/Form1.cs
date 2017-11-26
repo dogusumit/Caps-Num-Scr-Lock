@@ -11,44 +11,13 @@ namespace Caps_Num_Scr_Lock
 
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
+        private int gosterKontrol = -1;
+        private int lockKontrol = -1;
+        private bool gizli = false;
 
         public Form1()
         {
             InitializeComponent();
-
-            string[] args = Environment.GetCommandLineArgs();
-            if (args[0] != null)
-            {
-                if (args[0].Equals("hide"))
-                {
-                    Hide();
-                }
-            }
-
-            trayMenu = new ContextMenu();
-            trayIcon = new NotifyIcon();
-            trayMenu.MenuItems.Add("Aç", ac);
-            trayMenu.MenuItems.Add("Çıkış", cikis);
-
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
-            if (regkey != null)
-            {
-                checkBox1.Checked = regkey.GetValue("caps").ToString() == "1" ? true : false;
-                checkBox2.Checked = regkey.GetValue("num").ToString() == "1" ? true : false;
-                checkBox3.Checked = regkey.GetValue("scr").ToString() == "1" ? true : false;
-            }
-
-            checkBox4.Checked = IsStartupItem();
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            //Hide();
-            ShowInTaskbar = false;
-            simgeGoster();
-
-            timer1.Start();
-            base.OnLoad(e);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -81,108 +50,86 @@ namespace Caps_Num_Scr_Lock
         {
             try
             {
-                trayIcon.ContextMenu = trayMenu;
-                int sayac = 0;
-                sayac += checkBox1.Checked ? 300 : 0;
-                sayac += checkBox2.Checked ? 30 : 0;
-                sayac += checkBox3.Checked ? 3 : 0;
-                if (sayac == 333)
+                trayIcon.Visible = false;
+
+                if (gosterKontrol == 111)
                 {
                     trayIcon.Text = "Caps - Num - Scr Lock";
-                    int kontrol = 0;
-                    kontrol += IsKeyLocked(Keys.CapsLock) ? 100 : 0;
-                    kontrol += IsKeyLocked(Keys.NumLock) ? 10 : 0;
-                    kontrol += IsKeyLocked(Keys.Scroll) ? 1 : 0;
-                    if (kontrol == 111)
+                    if (lockKontrol == 111)
                         trayIcon.Icon = Icon.FromHandle(Resources._111.GetHicon());
-                    else if (kontrol == 110)
+                    else if (lockKontrol == 110)
                         trayIcon.Icon = Icon.FromHandle(Resources._110.GetHicon());
-                    else if (kontrol == 101)
+                    else if (lockKontrol == 101)
                         trayIcon.Icon = Icon.FromHandle(Resources._101.GetHicon());
-                    else if (kontrol == 100)
+                    else if (lockKontrol == 100)
                         trayIcon.Icon = Icon.FromHandle(Resources._100.GetHicon());
-                    else if (kontrol == 011)
+                    else if (lockKontrol == 011)
                         trayIcon.Icon = Icon.FromHandle(Resources._011.GetHicon());
-                    else if (kontrol == 010)
+                    else if (lockKontrol == 010)
                         trayIcon.Icon = Icon.FromHandle(Resources._010.GetHicon());
-                    else if (kontrol == 001)
+                    else if (lockKontrol == 001)
                         trayIcon.Icon = Icon.FromHandle(Resources._001.GetHicon());
-                    else if (kontrol == 000)
+                    else if (lockKontrol == 000)
                         trayIcon.Icon = Icon.FromHandle(Resources._000.GetHicon());
                 }
-                else if (sayac == 330)
+                else if (gosterKontrol == 110)
                 {
                     trayIcon.Text = "Caps - Num Lock";
-                    int kontrol = 0;
-                    kontrol += IsKeyLocked(Keys.CapsLock) ? 20 : 0;
-                    kontrol += IsKeyLocked(Keys.NumLock) ? 2 : 0;
-                    if (kontrol == 22)
+                    if (lockKontrol == 110)
                         trayIcon.Icon = Icon.FromHandle(Resources._111.GetHicon());
-                    else if (kontrol == 20)
+                    else if (lockKontrol == 100)
                         trayIcon.Icon = Icon.FromHandle(Resources._20.GetHicon());
-                    else if (kontrol == 02)
+                    else if (lockKontrol == 010)
                         trayIcon.Icon = Icon.FromHandle(Resources._02.GetHicon());
-                    else if (kontrol == 00)
+                    else if (lockKontrol == 000)
                         trayIcon.Icon = Icon.FromHandle(Resources._000.GetHicon());
                 }
-                else if (sayac == 303)
+                else if (gosterKontrol == 101)
                 {
                     trayIcon.Text = "Caps - Scr Lock";
-                    int kontrol = 0;
-                    kontrol += IsKeyLocked(Keys.CapsLock) ? 20 : 0;
-                    kontrol += IsKeyLocked(Keys.Scroll) ? 2 : 0;
-                    if (kontrol == 22)
+                    if (lockKontrol == 101)
                         trayIcon.Icon = Icon.FromHandle(Resources._111.GetHicon());
-                    else if (kontrol == 20)
+                    else if (lockKontrol == 100)
                         trayIcon.Icon = Icon.FromHandle(Resources._20.GetHicon());
-                    else if (kontrol == 02)
+                    else if (lockKontrol == 001)
                         trayIcon.Icon = Icon.FromHandle(Resources._02.GetHicon());
-                    else if (kontrol == 00)
+                    else if (lockKontrol == 000)
                         trayIcon.Icon = Icon.FromHandle(Resources._000.GetHicon());
                 }
-                else if (sayac == 033)
+                else if (gosterKontrol == 011)
                 {
                     trayIcon.Text = "Num - Scr Lock";
-                    int kontrol = 0;
-                    kontrol += IsKeyLocked(Keys.NumLock) ? 20 : 0;
-                    kontrol += IsKeyLocked(Keys.Scroll) ? 2 : 0;
-                    if (kontrol == 22)
+                    if (lockKontrol == 011)
                         trayIcon.Icon = Icon.FromHandle(Resources._111.GetHicon());
-                    else if (kontrol == 20)
+                    else if (lockKontrol == 010)
                         trayIcon.Icon = Icon.FromHandle(Resources._20.GetHicon());
-                    else if (kontrol == 02)
+                    else if (lockKontrol == 001)
                         trayIcon.Icon = Icon.FromHandle(Resources._02.GetHicon());
-                    else if (kontrol == 00)
+                    else if (lockKontrol == 000)
                         trayIcon.Icon = Icon.FromHandle(Resources._000.GetHicon());
                 }
-                else if (sayac == 300)
+                else if (gosterKontrol == 100)
                 {
                     trayIcon.Text = "Caps Lock";
-                    int kontrol = 0;
-                    kontrol += IsKeyLocked(Keys.CapsLock) ? 1 : 0;
-                    if (kontrol == 1)
+                    if (lockKontrol == 100)
                         trayIcon.Icon = Icon.FromHandle(Resources._111.GetHicon());
-                    else if (kontrol == 0)
+                    else if (lockKontrol == 000)
                         trayIcon.Icon = Icon.FromHandle(Resources._000.GetHicon());
                 }
-                else if (sayac == 030)
+                else if (gosterKontrol == 010)
                 {
                     trayIcon.Text = "Num Lock";
-                    int kontrol = 0;
-                    kontrol += IsKeyLocked(Keys.NumLock) ? 1 : 0;
-                    if (kontrol == 1)
+                    if (lockKontrol == 010)
                         trayIcon.Icon = Icon.FromHandle(Resources._111.GetHicon());
-                    else if (kontrol == 0)
+                    else if (lockKontrol == 000)
                         trayIcon.Icon = Icon.FromHandle(Resources._000.GetHicon());
                 }
-                else if (sayac == 003)
+                else if (gosterKontrol == 001)
                 {
                     trayIcon.Text = "Scr Lock";
-                    int kontrol = 0;
-                    kontrol += IsKeyLocked(Keys.Scroll) ? 1 : 0;
-                    if (kontrol == 1)
+                    if (lockKontrol == 001)
                         trayIcon.Icon = Icon.FromHandle(Resources._111.GetHicon());
-                    else if (kontrol == 0)
+                    else if (lockKontrol == 000)
                         trayIcon.Icon = Icon.FromHandle(Resources._000.GetHicon());
                 }
                 else
@@ -190,41 +137,66 @@ namespace Caps_Num_Scr_Lock
                     trayIcon.Visible = false;
                     return;
                 }
-                trayIcon.Click += new System.EventHandler(ac);
                 trayIcon.Visible = true;
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.Message.ToString());
+                MessageBox.Show("programda hata var :(\n"+e.Message.ToString());
+                timer1.Stop();
             }
         }
 
         private void ac(object sender, EventArgs e)
         {
-            Show();
+            if (gizli)
+            {
+                Show();
+                gizli = false;
+            } else
+            {
+                Hide();
+                gizli = true;
+            }
         }
 
         private void cikis(object sender, EventArgs e)
         {
             trayIcon.Visible = false;
+            trayIcon.Dispose();
             Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Hide();
+            gizli = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             trayIcon.Visible = false;
+            trayIcon.Dispose();
             Close();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            simgeGoster();
-            labelGuncelle();
+            int tmp1 = 0;
+            tmp1 += checkBox1.Checked ? 100 : 0;
+            tmp1 += checkBox2.Checked ? 010 : 0;
+            tmp1 += checkBox3.Checked ? 001 : 0;
+            int tmp2 = 0;
+            tmp2 += IsKeyLocked(Keys.CapsLock) ? 100 : 0;
+            tmp2 += IsKeyLocked(Keys.NumLock) ? 010 : 0;
+            tmp2 += IsKeyLocked(Keys.Scroll) ? 001 : 0;
+
+            if (tmp1 != gosterKontrol || tmp2 != lockKontrol)
+            {
+                gosterKontrol = tmp1;
+                lockKontrol = tmp2;
+                simgeGoster();
+                labelGuncelle();
+            }
         }
 
         private void labelGuncelle()
@@ -263,6 +235,39 @@ namespace Caps_Num_Scr_Lock
             {
                 offBaslangic();
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+            string[] args = Environment.GetCommandLineArgs();
+            if (args[0] != null)
+            {
+                if (args[0].Equals("hide"))
+                {
+                    Hide();
+                    gizli = true;
+                }
+            }
+            
+            trayMenu = new ContextMenu();
+            trayIcon = new NotifyIcon();
+            trayMenu.MenuItems.Add("Aç", ac);
+            trayMenu.MenuItems.Add("Çıkış", cikis);
+            trayIcon.ContextMenu = trayMenu;
+            trayIcon.Click += new System.EventHandler(ac);
+
+            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
+            if (regkey != null)
+            {
+                checkBox1.Checked = regkey.GetValue("caps").ToString().Equals("1") ? true : false;
+                checkBox2.Checked = regkey.GetValue("num").ToString().Equals("1") ? true : false;
+                checkBox3.Checked = regkey.GetValue("scr").ToString().Equals("1") ? true : false;
+            }
+
+            checkBox4.Checked = IsStartupItem();
+            simgeGoster();
+            timer1.Start();
         }
     }
 }

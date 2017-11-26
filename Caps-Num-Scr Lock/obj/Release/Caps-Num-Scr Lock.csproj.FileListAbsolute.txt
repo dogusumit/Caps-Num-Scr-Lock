@@ -1,0 +1,14 @@
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\bin\Release\Caps-Num-Scr Lock.exe.config
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\bin\Release\Caps-Num-Scr Lock.exe.manifest
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\bin\Release\Caps-Num-Scr Lock.application
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\bin\Release\Caps-Num-Scr Lock.exe
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\bin\Release\Caps-Num-Scr Lock.pdb
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps-Num-Scr Lock.csprojResolveAssemblyReference.cache
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps_Num_Scr_Lock.Form1.resources
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps_Num_Scr_Lock.Properties.Resources.resources
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps-Num-Scr Lock.csproj.GenerateResource.Cache
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps-Num-Scr Lock.csproj.CoreCompileInputs.cache
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps-Num-Scr Lock.exe.manifest
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps-Num-Scr Lock.application
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps-Num-Scr Lock.exe
+C:\Users\grundig\Documents\Visual Studio 2017\Caps-Num-Scr Lock\Caps-Num-Scr Lock\obj\Release\Caps-Num-Scr Lock.pdb
