@@ -1,6 +1,7 @@
 ﻿using Caps_Num_Scr_Lock.Properties;
 using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -21,30 +22,190 @@ namespace Caps_Num_Scr_Lock
             InitializeComponent();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                trayMenu = new ContextMenu();
+                trayIcon = new NotifyIcon();
+                trayMenu.MenuItems.Add("Aç", ac);
+                trayMenu.MenuItems.Add("Çıkış", cikis);
+                trayIcon.ContextMenu = trayMenu;
+                trayIcon.Click += new EventHandler(ikonKlik);
+
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
+                if (regkey != null)
+                {
+                    if (regkey.GetValue("caps") != null)
+                        checkBox1.Checked = regkey.GetValue("caps").ToString().Equals("1") ? true : false;
+                    if (regkey.GetValue("num") != null)
+                        checkBox2.Checked = regkey.GetValue("num").ToString().Equals("1") ? true : false;
+                    if (regkey.GetValue("scr") != null)
+                        checkBox3.Checked = regkey.GetValue("scr").ToString().Equals("1") ? true : false;
+                }
+
+                checkBox4.Checked = IsStartupItem();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
+        }
+        
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            try
+            {
+                if (ilkCalisma)
+                {
+                    string[] args = Environment.GetCommandLineArgs();
+                    if (args != null)
+                    {
+                        foreach (string a in args)
+                        {
+                            if (a.Equals("-hide"))
+                            {
+                                Hide();
+                                gizli = true;
+                                ilkCalisma = false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
+        }
+
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.CurrentUser.CreateSubKey("Caps - Num - Scr Lock");
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
-            regkey.SetValue("caps", ((CheckBox)sender).Checked ? "1" : "0");
+            try
+            {
+                Registry.CurrentUser.CreateSubKey("Caps - Num - Scr Lock");
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
+                regkey.SetValue("caps", ((CheckBox)sender).Checked ? "1" : "0");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.CurrentUser.CreateSubKey("Caps - Num - Scr Lock");
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
-            regkey.SetValue("num", ((CheckBox)sender).Checked ? "1" : "0");
+            try
+            {
+                Registry.CurrentUser.CreateSubKey("Caps - Num - Scr Lock");
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
+                regkey.SetValue("num", ((CheckBox)sender).Checked ? "1" : "0");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.CurrentUser.CreateSubKey("Caps - Num - Scr Lock");
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
-            regkey.SetValue("scr", ((CheckBox)sender).Checked ? "1" : "0");
+            try
+            {
+                Registry.CurrentUser.CreateSubKey("Caps - Num - Scr Lock");
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
+                regkey.SetValue("scr", ((CheckBox)sender).Checked ? "1" : "0");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (((CheckBox)sender).Checked)
+                {
+                    onBaslangic();
+                }
+                else
+                {
+                    offBaslangic();
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("www.dogusumit.com");
+            try
+            {
+                System.Diagnostics.Process.Start("www.dogusumit.com");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Hide();
+                gizli = true;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                trayIcon.Visible = false;
+                trayIcon.Dispose();
+                Close();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                int tmp1 = 0;
+                tmp1 += checkBox1.Checked ? 100 : 0;
+                tmp1 += checkBox2.Checked ? 010 : 0;
+                tmp1 += checkBox3.Checked ? 001 : 0;
+                int tmp2 = 0;
+                tmp2 += IsKeyLocked(Keys.CapsLock) ? 100 : 0;
+                tmp2 += IsKeyLocked(Keys.NumLock) ? 010 : 0;
+                tmp2 += IsKeyLocked(Keys.Scroll) ? 001 : 0;
+
+                if (tmp1 != gosterKontrol || tmp2 != lockKontrol)
+                {
+                    gosterKontrol = tmp1;
+                    lockKontrol = tmp2;
+                    simgeGoster();
+                    labelGuncelle();
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
         }
 
         private void simgeGoster()
@@ -140,152 +301,119 @@ namespace Caps_Num_Scr_Lock
                 }
                 trayIcon.Visible = true;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                MessageBox.Show("programda hata var :(\n"+e.Message.ToString());
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
                 timer1.Stop();
             }
         }
 
         private void ac(object sender, EventArgs e)
         {
+            try
+            {
                 Show();
                 gizli = false;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
+            }
         }
 
         private void ikonKlik(object sender, EventArgs e)
         {
-            if (gizli)
+            try
             {
-                Show();
-                gizli = false;
-            } else
+                if (gizli)
+                {
+                    Show();
+                    gizli = false;
+                }
+                else
+                {
+                    Hide();
+                    gizli = true;
+                }
+            }
+            catch (Exception exc)
             {
-                Hide();
-                gizli = true;
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
             }
         }
 
         private void cikis(object sender, EventArgs e)
         {
-            trayIcon.Visible = false;
-            trayIcon.Dispose();
-            Close();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Hide();
-            gizli = true;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            trayIcon.Visible = false;
-            trayIcon.Dispose();
-            Close();
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            int tmp1 = 0;
-            tmp1 += checkBox1.Checked ? 100 : 0;
-            tmp1 += checkBox2.Checked ? 010 : 0;
-            tmp1 += checkBox3.Checked ? 001 : 0;
-            int tmp2 = 0;
-            tmp2 += IsKeyLocked(Keys.CapsLock) ? 100 : 0;
-            tmp2 += IsKeyLocked(Keys.NumLock) ? 010 : 0;
-            tmp2 += IsKeyLocked(Keys.Scroll) ? 001 : 0;
-
-            if (tmp1 != gosterKontrol || tmp2 != lockKontrol)
+            try
             {
-                gosterKontrol = tmp1;
-                lockKontrol = tmp2;
-                simgeGoster();
-                labelGuncelle();
+                trayIcon.Visible = false;
+                trayIcon.Dispose();
+                Close();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
             }
         }
 
         private void labelGuncelle()
         {
-            label4.Text = IsKeyLocked(Keys.CapsLock) ? "AÇIK" : "KAPALI";
-            label5.Text = IsKeyLocked(Keys.NumLock) ? "AÇIK" : "KAPALI";
-            label6.Text = IsKeyLocked(Keys.Scroll) ? "AÇIK" : "KAPALI";
+            try
+            {
+                label4.Text = IsKeyLocked(Keys.CapsLock) ? "AÇIK" : "KAPALI";
+                label5.Text = IsKeyLocked(Keys.NumLock) ? "AÇIK" : "KAPALI";
+                label6.Text = IsKeyLocked(Keys.Scroll) ? "AÇIK" : "KAPALI";
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("programda hata var :(\n" + e.Message.ToString());
+            }
         }
 
         private void offBaslangic()
         {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (IsStartupItem())
-                regkey.DeleteValue("Caps - Num - Scr Lock", false);
+            try
+            {
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (IsStartupItem())
+                    regkey.DeleteValue("Caps - Num - Scr Lock", false);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("programda hata var :(\n" + e.Message.ToString());
+            }
         }
+
         private void onBaslangic()
         {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (!IsStartupItem())
-                regkey.SetValue("Caps - Num - Scr Lock", Application.ExecutablePath.ToString()+" -hide");
+            try
+            {
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (!IsStartupItem())
+                    regkey.SetValue("Caps - Num - Scr Lock", Application.ExecutablePath.ToString() + " -hide");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("programda hata var :(\n" + e.Message.ToString());
+            }
         }
+
         private bool IsStartupItem()
         {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (regkey.GetValue("Caps - Num - Scr Lock") == null)
+            try
+            {
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (regkey.GetValue("Caps - Num - Scr Lock") == null)
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("programda hata var :(\n" + exc.Message.ToString());
                 return false;
-            else
-                return true;
-        }
-
-        private void checkBox4_CheckedChanged(object sender, EventArgs e)
-        {
-            if ( ((CheckBox)sender).Checked) {
-                onBaslangic();
-            } else
-            {
-                offBaslangic();
             }
         }
 
-        protected override void OnShown(EventArgs e)
-        {
-            base.OnShown(e);
-            if (ilkCalisma)
-            {
-                string[] args = Environment.GetCommandLineArgs();
-                if (args[0] != null)
-                {
-                    foreach (string a in args)
-                    {
-                        if (a.Equals("-hide"))
-                        {
-                            Hide();
-                            gizli = true;
-                            ilkCalisma = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-            trayMenu = new ContextMenu();
-            trayIcon = new NotifyIcon();
-            trayMenu.MenuItems.Add("Aç", ac);
-            trayMenu.MenuItems.Add("Çıkış", cikis);
-            trayIcon.ContextMenu = trayMenu;
-            trayIcon.Click += new System.EventHandler(ikonKlik);
-
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Caps - Num - Scr Lock", true);
-            if (regkey != null)
-            {
-                checkBox1.Checked = regkey.GetValue("caps").ToString().Equals("1") ? true : false;
-                checkBox2.Checked = regkey.GetValue("num").ToString().Equals("1") ? true : false;
-                checkBox3.Checked = regkey.GetValue("scr").ToString().Equals("1") ? true : false;
-            }
-
-            checkBox4.Checked = IsStartupItem();
-            simgeGoster();
-            timer1.Start();
-        }
     }
 }
